@@ -268,6 +268,9 @@ int main() {
 								double check_speed = sqrt(vx*vx+vy*vy);
 								double check_car_s = sensor_fusion[i][5];
 								
+								//We are going to have a simple prediction here as our project is through highway. 
+								//But in the prediction lecture, we are gone through, model, data drivien, and hybrid approach for prediction
+								//Which can be useful for more complex scenarios.
 								//Predcting s value in future
 								check_car_s += ((double)prev_size*0.02*check_speed);
 								if(check_car_s > car_s && check_car_s - car_s < 30) {
