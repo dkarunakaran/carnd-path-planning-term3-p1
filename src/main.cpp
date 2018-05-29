@@ -270,8 +270,17 @@ int main() {
 								
 								//We are going to have a simple prediction here as our project is through highway. 
 								//But in the prediction lecture, we are gone through, model, data drivien, and hybrid approach for prediction
-								//Which can be useful for more complex scenarios.
-								//Predcting s value in future
+								//which can be useful for more complex scenarios.
+								
+								//We are gone through two approaches in prediction: model based and data driven based.
+								//In, data driven based approach where camera used to collect the data and train the model on it
+								//tehn predict the trajectories of the vehicle.
+								//In, model based approach, we define the process model of each scenarios(left, right, and straight), then use multimodel
+								//algorithm to predict the trajectory of the vehicles
+								//predcting s value in future.
+								
+								//Both apparach has pros and cons. The combination of these two can have powerful features. In hybrid approach, multi model alogorithm 
+								//gets replace with a machine learning algorithm. In the lecture, we learned about naive bayes classifier.
 								check_car_s += ((double)prev_size*0.02*check_speed);
 								if(check_car_s > car_s && check_car_s - car_s < 30) {
 									car_ahead = true;										
