@@ -254,9 +254,9 @@ int main() {
 						//which can be useful for more complex scenarios.
 
 						//We are gone through two approaches in prediction: model based and data driven based.
-						//In, data driven based approach where camera used to collect the data and train the model on it
+						//In data driven based approach where camera used to collect the data and train the model on it
 						//tehn predict the trajectories of the vehicle.
-						//In, model based approach, we define the process model of each scenarios(left, right, and straight), then use multimodel
+						//In model based approach, we define the process model of each scenarios(left, right, and straight), then use multimodel
 						//algorithm to predict the trajectory of the vehicles
 						//predcting s value in future.
 
@@ -266,20 +266,45 @@ int main() {
 						//In the practice section of the classifier, we learned about few things:
 						//1) We have trained datset where X represet the coordinates(s,d s_dot, d_dot) and Y represent the corresponding labels(left, right, straight).
 						//2) train the model using the equation of the GNB
-						//3) Predict the new label(Y) when new features(X) sre provoded
+						//3) Predict the new label(Y) when new features(X) sre provided
+
+						/*
+							In this example prediction module we use to find out following
+							car ahead is too close, car on the left is too close, and car on the right is too close.
+
+							As explained actual prediction module will be implementd using the apparoach mentioned above, but this highway project
+							doesnt need to predict the trajectory of each vehicle as those vehicles trajectory will be on the straight lane.
+						*/
 
 						if(prev_size > 0) {
 							car_s = end_path_s;
 						}
 
-						bool keep_lane = false;
-						bool change_left= false;
-						bool change_right = false;
-						bool too_close = false;
+						bool car_left= false;
+						bool car_right = false;
+						bool car_ahead = false;
 						for(int i=0; i < sensor_fusion.size(); i++) {
 							
-							//car is in my line
 							float d = sensor_fusion[i][6];
+
+							int check_car_lane;
+
+							/*Currently we assume that we have only three lanes and each lane has 4 meter width. In actual scenarion, 
+							number of lanes an ddistance between the lanes and total lanes distance can be detected using computer vision 
+							technologies. We slightly touched in advanced lane findings in term1. 
+							*/
+							if(d > 0 && d < 4)
+								check_car_lane = 0;
+							}else if(d > 4 && d < 8) {
+								check_car_lane = 1;
+							}else if(d > 8 and d < 12) {
+								check_car_lane = 2;
+							} 
+							
+							else if(d < (2+4*lane-2)) {
+								check_car_lane = lane -1;
+							}			
+							
 							if(d <(2+4*lane+2) && d > (2+4*lane-2)) {
 								double vx = sensor_fusion[i][3];
 								double vy = sensor_fusion[i][4];
