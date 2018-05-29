@@ -249,6 +249,24 @@ int main() {
 						int prev_size = previous_path_x.size();
 
 						//PREDICTION
+						//We are going to have a simple prediction here as our project is through highway. 
+						//But in the prediction lecture, we are gone through, model, data drivien, and hybrid approach for prediction
+						//which can be useful for more complex scenarios.
+
+						//We are gone through two approaches in prediction: model based and data driven based.
+						//In, data driven based approach where camera used to collect the data and train the model on it
+						//tehn predict the trajectories of the vehicle.
+						//In, model based approach, we define the process model of each scenarios(left, right, and straight), then use multimodel
+						//algorithm to predict the trajectory of the vehicles
+						//predcting s value in future.
+
+						//Both apparach has pros and cons. The combination of these two can have powerful features. In hybrid approach, multi model alogorithm 
+						//gets replace with a machine learning algorithm. In the lecture, we learned about naive bayes classifier.
+
+						//In the practice section of the classifier, we learned about few things:
+						//1) We have trained datset where X represet the coordinates(s,d s_dot, d_dot) and Y represent the corresponding labels(left, right, straight).
+						//2) train the model using the equation of the GNB
+						//3) Predict the new label(Y) when new features(X) sre provoded
 
 						if(prev_size > 0) {
 							car_s = end_path_s;
@@ -266,26 +284,8 @@ int main() {
 								double vx = sensor_fusion[i][3];
 								double vy = sensor_fusion[i][4];
 								double check_speed = sqrt(vx*vx+vy*vy);
-								double check_car_s = sensor_fusion[i][5];
+								double check_car_s = sensor_fusion[i][5];	
 								
-								//We are going to have a simple prediction here as our project is through highway. 
-								//But in the prediction lecture, we are gone through, model, data drivien, and hybrid approach for prediction
-								//which can be useful for more complex scenarios.
-								
-								//We are gone through two approaches in prediction: model based and data driven based.
-								//In, data driven based approach where camera used to collect the data and train the model on it
-								//tehn predict the trajectories of the vehicle.
-								//In, model based approach, we define the process model of each scenarios(left, right, and straight), then use multimodel
-								//algorithm to predict the trajectory of the vehicles
-								//predcting s value in future.
-								
-								//Both apparach has pros and cons. The combination of these two can have powerful features. In hybrid approach, multi model alogorithm 
-								//gets replace with a machine learning algorithm. In the lecture, we learned about naive bayes classifier.
-								
-								//In the practice section of the classifier, we learned about few things:
-								//1) We have trained datset where X represet the coordinates(s,d s_dot, d_dot) and Y represent the corresponding labels(left, right, straight).
-								//2) train the model using the equation of the GNB
-								//3) Predict the new label(Y) when new features(X) sre provoded
 								check_car_s += ((double)prev_size*0.02*check_speed);
 								if(check_car_s > car_s && check_car_s - car_s < 30) {
 									car_ahead = true;										
