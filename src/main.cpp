@@ -272,10 +272,10 @@ int main() {
 							car_s = end_path_s;
 						}
 
-						bool car_ahead = false;
-						bool car_left = false;
-						bool car_right = false;
-
+						bool keep_lane = false;
+						bool change_left= false;
+						bool change_right = false;
+						bool too_close = false;
 						for(int i=0; i < sensor_fusion.size(); i++) {
 							
 							//car is in my line
@@ -288,7 +288,7 @@ int main() {
 								
 								check_car_s += ((double)prev_size*0.02*check_speed);
 								if(check_car_s > car_s && check_car_s - car_s < 30) {
-									car_ahead = true;										
+									too_close = true;										
 								}
 
 								// come up with car_left and car_right scenarios
@@ -298,7 +298,7 @@ int main() {
 						}
 
 						//BEHAVIOUR
-						if(car_ahead) {
+						if(too_close) {
 							ref_vel -= speed_diff;
 						} else if(ref_vel < max_accel) {
 							ref_vel += speed_diff;
