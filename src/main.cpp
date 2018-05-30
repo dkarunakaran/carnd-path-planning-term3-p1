@@ -293,43 +293,48 @@ int main() {
 							number of lanes an ddistance between the lanes and total lanes distance can be detected using computer vision 
 							technologies. We slightly touched in advanced lane findings in term1. 
 							*/
-							if(d > 0 && d < 4)
+							if(d > 0 && d < 4) {
 								check_car_lane = 0;
-							}else if(d > 4 && d < 8) {
+							} else if(d > 4 && d < 8) {
 								check_car_lane = 1;
-							}else if(d > 8 and d < 12) {
+							} else if(d > 8 and d < 12) {
 								check_car_lane = 2;
-							} 
+							} 	
 							
-							else if(d < (2+4*lane-2)) {
-								check_car_lane = lane -1;
-							}			
+							double vx = sensor_fusion[i][3];
+							double vy = sensor_fusion[i][4];
+							double check_speed = sqrt(vx*vx+vy*vy);
+							double check_car_s = sensor_fusion[i][5];	
+
+							check_car_s += ((double)prev_size*0.02*check_speed);
+							if(check_car_lane == lane) {
+								//A vehicle is on the same line and check the car is in front of the ego car
+								car_ahead |= check_car_s > car_s && (check_car_s - car_s) < 30;										
+
+							} else if((check_car_lane - lane) == -1) {
+								//A vehicle is on the left lane and check that is in 30 meter range
+								car_left |= (car_s+30) > check_car_s  && (car_s-30) < check_car_s;
+
+							} else if((check_car_lane - lane) == 1) {
+								//A vehicle is on the right lane and check that is in 30 meter range
+								car_right |= (car_s+30) > check_car_s  && (car_s-30) < check_car_s;
 							
-							if(d <(2+4*lane+2) && d > (2+4*lane-2)) {
-								double vx = sensor_fusion[i][3];
-								double vy = sensor_fusion[i][4];
-								double check_speed = sqrt(vx*vx+vy*vy);
-								double check_car_s = sensor_fusion[i][5];	
-								
-								check_car_s += ((double)prev_size*0.02*check_speed);
-								if(check_car_s > car_s && check_car_s - car_s < 30) {
-									too_close = true;										
-								}
-
-								// come up with car_left and car_right scenarios
-
 							}
-
 						}
 
+						//As we said, actual prediction module gives the possible trajectories from the current timeline to the future of each vehicle. 
+						//In this highway exmaple, we will have only one possible trajectory for each vehicle and that is why we are using simple approach as above.
+						//In complex situation we may need to use model, data, or hybrid approach for prdiction module
+						
 						//BEHAVIOUR
-						if(too_close) {
+						if(car_ahead) {
 							ref_vel -= speed_diff;
 						} else if(ref_vel < max_accel) {
 							ref_vel += speed_diff;
 						}
 
-						//Implement all rest of the behaviour planner 
+						//In actual case, behaviour planner decides the trajectory based on the cost functions.
+						//In this highway example, we may no need to worry about cost functions as we are considering only lane change or reduce speed based on the obstacles. 
 
 						//TRAJECTORY
 						vector<double> ptsx;
@@ -352,7 +357,8 @@ int main() {
 
                 ptsy.push_back(prev_car_y);
                 ptsy.push_back(car_y);
-            } else {
+            
+						} else {
 
 								//Redefine the reference point to previous point
                 ref_x = previous_path_x[prev_size - 1];
