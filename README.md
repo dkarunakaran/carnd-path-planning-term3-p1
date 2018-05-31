@@ -201,6 +201,7 @@ image to be added
 
 In actual case, behaviour planner decides the trajectory based on the cost functions. In this highway example, we may no need to worry about cost functions as we are considering only lane change or reduce speed based on the obstacles. 
 
+content to be added
 
 ### Trajectory Generation
 Based on the desired immediate behavior, the trajectory planning component will determine which trajectory is best for executing this behavior.
