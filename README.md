@@ -7,6 +7,8 @@ In this project our goal is to safely navigate around a virtual highway with oth
 
 <img width="500" height="400" src="images/path_planner.png">
 
+Path planning consist of prediction, behaviour planning, and trajectory generation.
+
 ### Prediction
 The prediction component estimates what actions other objects might take in the future. For example, if another vehicle were identified, the prediction component would estimate its future trajectory.
 
