@@ -5,7 +5,7 @@ In this project our goal is to safely navigate around a virtual highway with oth
 
 ## Reflection
 
-<img width="500" height="500" src="images/path_planner.png">
+<img width="500" height="400" src="images/path_planner.png">
 
 ### Prediction
 The prediction component estimates what actions other objects might take in the future. For example, if another vehicle were identified, the prediction component would estimate its future trajectory.
