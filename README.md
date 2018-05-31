@@ -203,5 +203,5 @@ In actual case, behaviour planner decides the trajectory based on the cost funct
 
 content to be added
 
-### Trajectory Generation
+### Trajectory generation
 Based on the desired immediate behavior, the trajectory planning component will determine which trajectory is best for executing this behavior.
