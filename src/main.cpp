@@ -249,6 +249,10 @@ int main() {
 						int prev_size = previous_path_x.size();
 
 						//PREDICTION
+
+						/***
+						The prediction component estimates what actions other objects might take in the future. For example, if another vehicle were identified, the prediction component would estimate its future trajectory.
+						***/
 						//We are going to have a simple prediction here as our project is through highway. 
 						//But in the prediction lecture, we are gone through, model, data drivien, and hybrid approach for prediction
 						//which can be useful for more complex scenarios.
@@ -327,6 +331,10 @@ int main() {
 						//In complex situation we may need to use model, data, or hybrid approach for prdiction module
 						
 						//BEHAVIOUR
+						/***
+						The behavioral planning component determines what behavior the vehicle should exhibit at any point in time. 
+						For example stopping at a traffic light or intersection, changing lanes, accelerating, or making a left turn onto a new street are all maneuvers that may be issued by this component.
+						***/
 						if(car_ahead) {
 							ref_vel -= speed_diff;
 						} else if(ref_vel < max_accel) {
@@ -337,6 +345,9 @@ int main() {
 						//In this highway example, we may no need to worry about cost functions as we are considering only lane change or reduce speed based on the obstacles. 
 
 						//TRAJECTORY
+						/***
+						Based on the desired immediate behavior, the trajectory planning component will determine which trajectory is best for executing this behavior.
+						***/
 						vector<double> ptsx;
             vector<double> ptsy;
 
