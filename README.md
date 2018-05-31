@@ -8,7 +8,7 @@ In this project our goal is to safely navigate around a virtual highway with oth
 ### Prediction
 The prediction component estimates what actions other objects might take in the future. For example, if another vehicle were identified, the prediction component would estimate its future trajectory.
 
-#### Input of the prediction from sensor fusion
+#### Input of the prediction module from sensor fusion example
 ```
 {
     "timestamp" : 34512.21,
@@ -38,9 +38,9 @@ The prediction component estimates what actions other objects might take in the 
     ]
 }
 ```
-#### Output of the prediction module
+#### Output of the prediction module example
 
-````
+```
 {
     "timestamp" : 34512.21,
     "vehicles" : [
@@ -195,7 +195,12 @@ content to be added
 
 
 ### Behaviour planning
-The behavioral planning component determines what behavior the vehicle should exhibit at any point in time. For example stopping at a traffic light or intersection, changing lanes, accelerating, or making a left turn onto a new street are all maneuvers that may be issued by this component.
+The behavioral planning component determines what behavior the vehicle should exhibit at any point in time. For example stopping at a traffic light or intersection, changing lanes, accelerating, or making a left turn onto a new street are all maneuvers that may be issued by this component. Behavior planner takes the input of maps, route and predictions about what other vehicles are likely to do and suggest the trajectory module to create trajectory based on the suggestion from the behavior planner.
+
+image to be added
+
+In actual case, behaviour planner decides the trajectory based on the cost functions. In this highway example, we may no need to worry about cost functions as we are considering only lane change or reduce speed based on the obstacles. 
+
 
 ### Trajectory Generation
 Based on the desired immediate behavior, the trajectory planning component will determine which trajectory is best for executing this behavior.
