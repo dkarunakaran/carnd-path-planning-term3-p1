@@ -321,11 +321,13 @@ int main() {
 								lane--;
 							} else if(!car_right && lane !=2) {
 								lane++;
-							} else if(ref_vel < max_accel) {
-								ref_vel += speed_diff;
-							} else {
+							} else if(!car_left && lane !=2) {
+								lane++;
+							}else {
 								ref_vel -= speed_diff;
-							}			
+							}
+						} else if(ref_vel < max_accel){
+							ref_vel += speed_diff;
 						}
 						//In actual case, behaviour planner decides the trajectory based on the cost functions.
 						//In this highway example, we may no need to worry about cost functions as we are considering only lane change or reduce speed based on the obstacles. 
