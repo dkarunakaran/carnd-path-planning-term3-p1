@@ -197,8 +197,47 @@ As we see above, actual prediction module gives the possible trajectories from t
 
 Currently we assume that we have only three lanes and each lane has 4 meter width. In actual scenarion, number of lanes, distance between the lanes, and total lanes distance can be detected using computer vision technologies. We slightly touched in advanced lane findings in term1. 
 
-content to be added
+As we are using simple prediction technique where following parameter set to true is any of the vehicles sourrounding to ego vehicle within the limit.
 
+```
+bool car_ahead = false;
+bool car_left = false;
+bool car_righ = false;
+```
+
+Then we have to find out which of the line these car located.
+```
+if(d > 0 && d < 4) {
+    check_car_lane = 0;
+} else if(d > 4 && d < 8) {
+    check_car_lane = 1;
+} else if(d > 8 and d < 12) {
+    check_car_lane = 2;
+} 
+```
+
+Finally we have to set the above flags to true or false based on the car location to ego vehicle.
+```
+if(check_car_lane == lane) {
+    //A vehicle is on the same line and check the car is in front of the ego car
+    car_ahead |= check_car_s > car_s && (check_car_s - car_s) < 30;										
+
+} else if((check_car_lane - lane) == -1) {
+    //A vehicle is on the left lane and check that is in 30 meter range
+    car_left |= (car_s+30) > check_car_s  && (car_s-30) < check_car_s;
+
+} else if((check_car_lane - lane) == 1) {
+    //A vehicle is on the right lane and check that is in 30 meter range
+    car_right |= (car_s+30) > check_car_s  && (car_s-30) < check_car_s;
+
+}
+```
+
+car_s is provided by the simulator and check_car_s has to be computed.
+
+```
+check_car_s += ((double)prev_size*0.02*check_speed);
+```
 
 ### Behaviour planning
 The behavioral planning component determines what behavior the vehicle should exhibit at any point in time. For example stopping at a traffic light or intersection, changing lanes, accelerating, or making a left turn onto a new street are all maneuvers that may be issued by this component. Behavior planner takes the input of maps, route and predictions about what other vehicles are likely to do and suggest the trajectory module to create trajectory based on the suggestion from the behavior planner.
