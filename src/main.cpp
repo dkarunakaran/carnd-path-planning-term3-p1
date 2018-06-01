@@ -291,6 +291,7 @@ int main() {
 							double check_speed = sqrt(vx*vx+vy*vy);
 							double check_car_s = sensor_fusion[i][5];	
 
+							//This will help to predict the where the vehicle will be in future
 							check_car_s += ((double)prev_size*0.02*check_speed);
 							if(check_car_lane == lane) {
 								//A vehicle is on the same line and check the car is in front of the ego car
