@@ -9,7 +9,6 @@
 #include "Eigen-3.3/Eigen/QR"
 #include "json.hpp"
 #include "spline.h"
-
 using namespace std;
 
 // for convenience
@@ -253,24 +252,6 @@ int main() {
 						/***
 						The prediction component estimates what actions other objects might take in the future. For example, if another vehicle were identified, the prediction component would estimate its future trajectory.
 						***/
-						//We are going to have a simple prediction here as our project is through highway. 
-						//But in the prediction lecture, we are gone through, model, data drivien, and hybrid approach for prediction
-						//which can be useful for more complex scenarios.
-
-						//We are gone through two approaches in prediction: model based and data driven based.
-						//In data driven based approach where camera used to collect the data and train the model on it
-						//tehn predict the trajectories of the vehicle.
-						//In model based approach, we define the process model of each scenarios(left, right, and straight), then use multimodel
-						//algorithm to predict the trajectory of the vehicles
-						//predcting s value in future.
-
-						//Both apparach has pros and cons. The combination of these two can have powerful features. In hybrid approach, multi model alogorithm 
-						//gets replace with a machine learning algorithm. In the lecture, we learned about naive bayes classifier.
-
-						//In the practice section of the classifier, we learned about few things:
-						//1) We have trained datset where X represet the coordinates(s,d s_dot, d_dot) and Y represent the corresponding labels(left, right, straight).
-						//2) train the model using the equation of the GNB
-						//3) Predict the new label(Y) when new features(X) sre provided
 
 						/*
 							In this example prediction module we use to find out following
@@ -336,11 +317,16 @@ int main() {
 						For example stopping at a traffic light or intersection, changing lanes, accelerating, or making a left turn onto a new street are all maneuvers that may be issued by this component.
 						***/
 						if(car_ahead) {
-							ref_vel -= speed_diff;
-						} else if(ref_vel < max_accel) {
-							ref_vel += speed_diff;
+							if(!car_left && lane > 0) {
+								lane--;
+							} else if(!car_right && lane !=2) {
+								lane++;
+							} else if(ref_vel < max_accel) {
+								ref_vel += speed_diff;
+							} else {
+								ref_vel -= speed_diff;
+							}			
 						}
-
 						//In actual case, behaviour planner decides the trajectory based on the cost functions.
 						//In this highway example, we may no need to worry about cost functions as we are considering only lane change or reduce speed based on the obstacles. 
 
