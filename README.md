@@ -343,4 +343,44 @@ for ( int i = 0; i < prev_size; i++ ) {
 }
 ```
 
+Now we need to find the all spline points till the horizon(say 30m) value so that spacing the way that ego car can travel at desired speed. Remeber the speed of the car is depend on the spacing between the points. If we know x point(ie 30m in this case), spline will be able to get us correponding spline y points.
+
+```
+double target_x = 30.0;
+double target_y = s(target_x);
+double target_dist = sqrt(target_x*target_x + target_y*target_y);
+```
+Image to be added
+
+We can calculate the spline points from start to horizon y points by using the formula mentioned in the picture. Our number of points has to be calculated is 50. We already added remaining previous points to the vectors next_x_vals and next_y_vals. We need to get the spline points of 50-previous_points.
+
+```
+for( int i = 1; i < 50 - prev_size; i++ ) {
+              
+    double N = target_dist/(0.02*ref_vel/2.24);
+    double x_point = x_add_on + target_x/N;
+    double y_point = s(x_point);
+
+    x_add_on = x_point;
+
+    double x_ref = x_point;
+    double y_ref = y_point;
+
+    //Rotate back to normal after rotating it earlier
+    x_point = x_ref * cos(ref_yaw) - y_ref * sin(ref_yaw);
+    y_point = x_ref * sin(ref_yaw) + y_ref * cos(ref_yaw);
+
+    x_point += ref_x;
+    y_point += ref_y;
+
+    next_x_vals.push_back(x_point);
+    next_y_vals.push_back(y_point);
+}
+```
+
+next_x_vals and next_y_vals now have all 50 points which consist of 3 future points and 47 previous points.
+
+
+
+
 
