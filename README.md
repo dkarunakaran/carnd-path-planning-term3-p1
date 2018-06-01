@@ -350,7 +350,7 @@ double target_x = 30.0;
 double target_y = s(target_x);
 double target_dist = sqrt(target_x*target_x + target_y*target_y);
 ```
-<img src="spline.jpg"/>
+<img src="images/spline.jpg"/>
 We can calculate the spline points from start to horizon y points by using the formula mentioned in the picture. Our number of points has to be calculated is 50. We already added remaining previous points to the vectors next_x_vals and next_y_vals. We need to get the spline points of 50-previous_points.
 
 ```
