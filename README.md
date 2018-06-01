@@ -202,7 +202,7 @@ As we are using simple prediction technique where following parameter set to tru
 ```
 bool car_ahead = false;
 bool car_left = false;
-bool car_righ = false;
+bool car_right = false;
 ```
 
 Then we have to find out which of the line these car located.
@@ -244,7 +244,25 @@ The behavioral planning component determines what behavior the vehicle should ex
 
 In actual case, behaviour planner decides the trajectory based on the cost functions. In this highway example, we may no need to worry about cost functions as we are considering only lane change or reduce speed based on the obstacles. 
 
-content to be added
+Prediction set three flags(car_ahead, car_left, and car_right) according to the sensor fusion data.In the behavior planner as shown in the code below, it check for the car_ahed flag set to true. If it is, then it will execute the rest of the code to make the decision to turn left, turn right, or reduce the speed.
+
+```
+if(car_ahead) {
+    if(!car_left && lane > 0) {
+        lane--;
+    } else if(!car_right && lane !=2) {
+        lane++;
+    } else if(!car_left && lane !=2) {
+        lane++;
+    }else {
+        ref_vel -= speed_diff;
+    }
+} else if(ref_vel < max_accel){
+    ref_vel += speed_diff;
+}
+```
+
+If the car is not ahead and velocity is not same as max_accel, then it will increse the speed by small difference during each check.
 
 ### Trajectory generation
 Based on the desired immediate behavior, the trajectory planning component will determine which trajectory is best for executing this behavior.
