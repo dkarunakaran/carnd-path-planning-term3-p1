@@ -191,6 +191,8 @@ The prediction component estimates what actions other objects might take in the 
 ```
 This example only shows vehicles but in reality we would also generate predictions for all dynamic objects in view.
 
+In the prediction lecture, we are gone through, model, data drivien, and hybrid approach for prediction which can be useful for more complex scenarios. In data driven based approach where camera used to collect the data and train the model on it. Then predict the trajectories of the vehicle. In model based approach, we define the process model of each scenarios(left, right, and straight), then use multimodel algorithm to predict the trajectories of the vehicles that consist of t time t+1 time result. Both apparach has pros and cons. The combination of these two can have powerful features. In hybrid approach, multimodel alogorithm gets replace with a machine learning algorithm. One of such a algorthm is called naive bayes classifier.
+
 As we see above, actual prediction module gives the possible trajectories from the current timeline to the future of each vehicle. In this highway exmaple, we will have only one possible trajectory for each vehicle and we are using simple approach for predictio here. In complex situation we may need to use model, data, or hybrid approach for prediction module.
 
 Currently we assume that we have only three lanes and each lane has 4 meter width. In actual scenarion, number of lanes, distance between the lanes, and total lanes distance can be detected using computer vision technologies. We slightly touched in advanced lane findings in term1. 
